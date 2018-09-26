@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <WasmHead>true</WasmHead>
+    <DefineConstants>$(DefineConstants);__WASM__</DefineConstants>
+    <NoWarn>NU1701</NoWarn>
+		<MonoWasmSDKUri>https://jenkins.mono-project.com/job/test-mono-mainline-wasm/873/label=ubuntu-1804-amd64/Azure/processDownloadRequest/873/ubuntu-1804-amd64/sdks/wasm/mono-wasm-817b4795403.zip</MonoWasmSDKUri>
+	</PropertyGroup>
+  <ItemGroup>
+    <Content Include="..\EFCoreSample.UWP\Assets\*.png" Link="Assets\%(FileName)%(Extension)" />
+    <Content Include="Fonts\winjs-symbols.woff2" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="WasmCSS\Fonts.css" />
+    <EmbeddedResource Include="WasmScripts\AppManifest.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <LinkerDescriptor Include="LinkerConfig.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- 
+    This item group is required by the project templace because of the
+    new SDK-Style project, otherwise some files are not aded automatically.
+    
+    You can safely this ItemGroup completely.
+    -->
+    <Compile Remove="Program.cs" />
+    <Compile Include="Program.cs" />
+    <Content Include="LinkerConfig.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Uno.sqlite-wasm" Version="1.0.0-dev.697" />
+    <PackageReference Include="Uno.UI" Version="1.40.0-dev.412" />
+    <PackageReference Include="Uno.Wasm.Bootstrap" Version="1.0.0-dev.56" />
+
+		<PackageReference Include="Microsoft.EntityFrameworkCore">
+			<Version>2.1.3</Version>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+			<Version>2.1.3</Version>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite">
+			<Version>2.1.3</Version>
+		</PackageReference>
+		
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0-preview2-35157" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.2" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.2" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.2" />
+		<PackageReference Include="Microsoft.CodeAnalysis" Version="2.8.2" />
+
+	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\SQLitePCLRaw.provider.wasm\SQLitePCLRaw.provider.wasm.csproj" />
+  </ItemGroup>
+  <Import Project="..\EFCoreSample.Shared\EFCoreSample.Shared.projitems" Label="Shared" Condition="Exists('..\EFCoreSample.Shared\EFCoreSample.Shared.projitems')" />
+</Project>

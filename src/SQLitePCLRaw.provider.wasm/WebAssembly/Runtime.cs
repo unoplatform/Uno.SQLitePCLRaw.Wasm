@@ -19,7 +19,7 @@ namespace WebAssembly
 			}
 			else
 			{
-				Console.WriteLine($"InvokeJS: [{str}]: {r}");
+				// Console.WriteLine($"InvokeJS: [{str}]: {r}");
 			}
 			return r;
 		}

@@ -1,0 +1,90 @@
+﻿<Page x:Class="EFCoreSample.MainPage"
+	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	  xmlns:xamarin="http://uno/xamarin"
+	  xmlns:wasm="http://uno/wasm"
+	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	  xmlns:local="using:EFCoreSample"
+	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	  mc:Ignorable="d xamarin wasm">
+
+	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+		  Padding="10">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+
+		<StackPanel Grid.ColumnSpan="2"
+					Margin="0,0,0,15">
+			<TextBlock FontWeight="Bold"
+					   FontSize="20"
+					   TextWrapping="Wrap">
+				<Run Text="Welcome to the" />
+				<Hyperlink NavigateUri="https://platform.uno">Uno Platform </Hyperlink>
+				<Run Text="Entity Framework Core Demo Application" />
+				<Run Text="for " />
+				<Hyperlink NavigateUri="https://github.com/nventive/Uno.SQLitePCLRaw.Wasm">SQLitePCLRaw</Hyperlink>
+				<xamarin:Run Text="running on" />
+				<wasm:Run Text="WebAssembly" />
+			</TextBlock>
+			<wasm:TextBlock Margin="0,0,0,10"
+					   TextWrapping="Wrap">This application uses Roslyn to parse the left zone, and shows the console output, with entity framework core code being accepted.</wasm:TextBlock>
+			<wasm:TextBlock Margin="0,0,0,10"
+					   TextWrapping="Wrap">This application is running <Bold>entirely locally</Bold> on your machine, no code is being sent out to the wire.</wasm:TextBlock>
+			<wasm:TextBlock FontStyle="Italic"
+					   TextWrapping="Wrap">
+					Note that this app is running the mono interpreted mode
+					(which is about <Hyperlink NavigateUri="https://github.com/stefan-schweiger/dotWasmBenchmark">50x slower
+					than it should be</Hyperlink>), and is for the time being best experienced in Microsoft Edge or Firefox.
+			</wasm:TextBlock>
+		</StackPanel>
+
+		<Grid Grid.Column="0"
+			  Grid.Row="1"
+			  BorderBrush="LightGray"
+			  BorderThickness="1">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="auto" />
+				<RowDefinition Height="auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+			<Button Grid.Row="0"
+					Content="Execute"
+					Click="Run_Click" />
+			<TextBlock Grid.Row="1"
+					   Text="Code"
+					   FontSize="20"
+					   FontWeight="Bold" />
+			<TextBox Grid.Row="2"
+					 IsReadOnly="true"
+					 AcceptsReturn="true"
+					 x:Name="codeBlock"
+					 Text="" />
+		</Grid>
+		<Grid Grid.Column="1"
+			  Grid.Row="1"
+			  BorderBrush="LightGray"
+			  BorderThickness="1">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+			<TextBlock Grid.Row="0"
+					   Text="Console output"
+					   FontSize="20"
+					   FontWeight="Bold" />
+			<ScrollViewer Grid.Row="1"
+						  HorizontalScrollBarVisibility="Visible">
+				<TextBlock x:Name="output"
+						   MaxLines="0"
+						   FontFamily="Courier New"
+						   Text="" />
+			</ScrollViewer>
+		</Grid>
+	</Grid>
+</Page>

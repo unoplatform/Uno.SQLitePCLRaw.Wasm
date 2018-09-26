@@ -9,8 +9,20 @@ namespace SQLitePCL
 	{
 		public int sqlite3_open(string filename, out IntPtr db)
 		{
-			var res = Runtime.InvokeJS($"SQLiteWasm.sqliteOpen(\"{Path.GetFileName(filename)}\")");
+			var res = Runtime.InvokeJS($"SQLiteWasm.sqlite3_open(\"{Path.GetFileName(filename)}\")");
 
+			return ParseOpenREsult(out db, res);
+		}
+
+		public int sqlite3_open_v2(string filename, out IntPtr db, int flags, string vfs)
+		{
+			var res = Runtime.InvokeJS($"SQLiteWasm.sqlite3_open_v2(\"{Path.GetFileName(filename)}\", {flags}, {vfs})");
+
+			return ParseOpenREsult(out db, res);
+		}
+
+		private static int ParseOpenREsult(out IntPtr db, string res)
+		{
 			var parts = res.Split(';');
 
 			if (parts.Length == 2
@@ -26,34 +38,42 @@ namespace SQLitePCL
 			return raw.SQLITE_ERROR;
 		}
 
-		public int sqlite3_open_v2(string filename, out IntPtr db, int flags, string vfs)
-		{
-			return sqlite3_open(filename, out db);
-		}
-
 		public int sqlite3_close(IntPtr db)
 			=> sqlite3_close_v2(db);
 
 		public int sqlite3_close_v2(IntPtr db) 
 			=> InvokeJSInt($"SQLiteWasm.sqliteClose2({db})");
 
+		public string sqlite3_db_filename(IntPtr db, string att)
+			=> Runtime.InvokeJS($"SQLiteWasm.sqlite3_db_filename({db}, \"{att}\")");
+
 		public int sqlite3_changes(IntPtr db) 
 			=> InvokeJSInt($"SQLiteWasm.sqliteChanges({db})");
 
 		public int sqlite3_prepare_v2(IntPtr db, string sql, out IntPtr stmt, out string remain)
 		{
+			sql = sql.Replace("\n", " ");
+
 			var res = Runtime.InvokeJS($"SQLiteWasm.sqlitePrepare2({db}, \"{Runtime.EscapeJs(sql)}\")");
 
 			var parts = res.Split(';');
 
-			if (parts.Length == 2
+			if (parts.Length == 3
 				&& int.TryParse(parts[0], out var code)
 				&& int.TryParse(parts[1], out var pStatement)
+				&& int.TryParse(parts[2], out var remainIndex)
 			)
 			{
 				stmt = (IntPtr)pStatement;
 
-				remain = "";
+				if (remainIndex != -1)
+				{
+					remain = sql.Substring(remainIndex);
+				}
+				else
+				{
+					remain = "";
+				}
 				return code;
 			}
 
@@ -84,6 +104,15 @@ namespace SQLitePCL
 
 		public string sqlite3_errmsg(IntPtr db) 
 			=> Runtime.InvokeJS($"SQLiteWasm.sqliteErrMsg({db})");
+
+		public int sqlite3_errcode(IntPtr db)
+			=> InvokeJS($"SQLiteWasm.sqlite3_errcode({db})");
+
+		public int sqlite3_extended_errcode(IntPtr db)
+			=> InvokeJS($"SQLiteWasm.sqlite3_extended_errcode({db})");
+
+		public int sqlite3_extended_result_codes(IntPtr db, int onoff)
+			=> InvokeJS($"SQLiteWasm.sqlite3_extended_result_codes({db}, {onoff})");
 
 		public int sqlite3_bind_parameter_index(IntPtr stmt, string strName)
 			=> InvokeJSInt($"SQLiteWasm.sqlite3_bind_parameter_index({stmt}, \"{strName}\")");
@@ -217,17 +246,13 @@ namespace SQLitePCL
 		public int sqlite3_create_function(IntPtr db, string name, int nArg, int flags, object v, delegate_function_scalar func) => throw new NotImplementedException();
 		public int sqlite3_create_function(IntPtr db, string name, int nArg, int flags, object v, delegate_function_aggregate_step func_step, delegate_function_aggregate_final func_final) => throw new NotImplementedException();
 		public int sqlite3_data_count(IntPtr stmt) => throw new NotImplementedException();
-		public string sqlite3_db_filename(IntPtr db, string att) => throw new NotImplementedException();
 		public IntPtr sqlite3_db_handle(IntPtr stmt) => throw new NotImplementedException();
 		public int sqlite3_db_readonly(IntPtr db, string dbName) => throw new NotImplementedException();
 		public int sqlite3_db_status(IntPtr db, int op, out int current, out int highest, int resetFlg) => throw new NotImplementedException();
 		public int sqlite3_enable_load_extension(IntPtr db, int enable) => throw new NotImplementedException();
 		public int sqlite3_enable_shared_cache(int enable) => throw new NotImplementedException();
-		public int sqlite3_errcode(IntPtr db) => throw new NotImplementedException();
 		public string sqlite3_errstr(int rc) => throw new NotImplementedException();
 		public int sqlite3_exec(IntPtr db, string sql, delegate_exec callback, object user_data, out string errMsg) => throw new NotImplementedException();
-		public int sqlite3_extended_errcode(IntPtr db) => throw new NotImplementedException();
-		public int sqlite3_extended_result_codes(IntPtr db, int onoff) => throw new NotImplementedException();
 		public int sqlite3_get_autocommit(IntPtr db) => throw new NotImplementedException();
 		public int sqlite3_initialize() => throw new NotImplementedException();
 		public void sqlite3_interrupt(IntPtr db) => throw new NotImplementedException();

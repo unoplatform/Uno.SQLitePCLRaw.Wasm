@@ -25,32 +25,26 @@ class SQLiteWasm {
         }
     }
 
-    static sqliteOpen(fileName) {
+    static sqlite3_open(fileName) {
 
-        //if (FS.findObject(fileName) !== null) {
+        var r2 = SQLiteNative.Database.open(fileName, null, { mode: "rwc", cache: "private" });
 
-        //    // Read the whole file in the mono module in memory
-        //    const binaryDb = FS.readFile(fileName, { encoding: 'binary', flags: "" });
+        fileMap[r2.pDB] = fileName;
 
-        //    var r1 = SQLiteNative.Database.open(fileName, binaryDb, { mode: "rwc", cache: "private" });
+        return `${r2.Result};${r2.pDB}`;
+    }
 
-        //    fileMap[r1.pDB] = fileName;
+    static sqlite3_open_v2(fileName, flags, vfs)
+    {
+        var r2 = SQLiteNative.Database.open_v2(fileName, null, flags, vfs);
 
-        //    return `${r1.Result};${r1.pDB}`;
-        //}
-        //else
+        fileMap[r2.pDB] = fileName;
 
-        {
-            var r2 = SQLiteNative.Database.open(fileName, null, { mode: "rwc", cache: "private" });
-
-            fileMap[r2.pDB] = fileName;
-
-            return `${r2.Result};${r2.pDB}`;
-        }
+        return `${r2.Result};${r2.pDB}`;
     }
 
     static sqliteClose2(pDb) {
-        var result = SQLiteNative.Database.close_v2(pDb, true);
+        var result = SQLiteNative.Database.close_v2(pDb, false);
 
         if (result.Data) {
             FS.writeFile(fileMap[pDb], result.Data, { encoding: 'binary', flags: "w" });
@@ -63,7 +57,7 @@ class SQLiteWasm {
 
         var stmt = SQLiteNative.Database.prepare2(pDb, query);
 
-        return `${stmt.Result};${stmt.pStatement}`;
+        return `${stmt.Result};${stmt.pStatement};${stmt.TailIndex}`;
     }
 
     static sqliteChanges(dbId) {
@@ -80,6 +74,18 @@ class SQLiteWasm {
 
     static sqliteLastInsertRowid(dbId) {
         return SQLiteNative.Database.last_insert_rowid(dbId);
+    }
+
+    static sqlite3_errcode(dbId) {
+        return SQLiteNative.Database.errcode(dbId);
+    }
+
+    static sqlite3_extended_result_codes(dbId, onoff) {
+        return SQLiteNative.Database.sqlite3_extended_result_codes(dbId, onoff);
+    }
+
+    static sqlite3_extended_errcode(dbId) {
+        return SQLiteNative.Database.extended_errcode(dbId);
     }
 
     static sqliteStep(pStatement) {
@@ -190,5 +196,9 @@ class SQLiteWasm {
 
     static sqlite3_stmt_readonly(pStatement) {
         return SQLiteNative.Database.stmt_readonly(pStatement);
+    }
+
+    static sqlite3_db_filename(pDB, zDBName) {
+        return SQLiteNative.Database.db_filename(pDB, zDBName);
     }
 }
