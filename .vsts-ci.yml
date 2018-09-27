@@ -41,3 +41,10 @@ phases:
       PathtoPublish: '$(build.artifactstagingdirectory)'
       ArtifactName: uno.sqlitepclwasmprovider-drop
       publishLocation: Container
+        
+  - task: PublishBuildArtifacts@1
+    displayName: Publish Package Artifacts
+    inputs:
+      pathToPublish: .\src\samples\EFCoreSample\EFCoreSample.Wasm\bin\Release\netstandard2.0\dist
+      artifactType: container
+      artifactName: EFCoreSample-Wasm

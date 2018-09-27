@@ -24,17 +24,20 @@
 					Margin="0,0,0,15">
 			<TextBlock FontWeight="Bold"
 					   FontSize="20"
-					   TextWrapping="Wrap">
+					   TextWrapping="Wrap"
+					   Margin="0,0,0,10">
 				<Run Text="Welcome to the" />
 				<Hyperlink NavigateUri="https://platform.uno">Uno Platform </Hyperlink>
-				<Run Text="Entity Framework Core Demo Application" />
-				<Run Text="for " />
+				<Run Text="Entity Framework Core Demo" />
+				<Run Text="for" />
 				<Hyperlink NavigateUri="https://github.com/nventive/Uno.SQLitePCLRaw.Wasm">SQLitePCLRaw</Hyperlink>
 				<xamarin:Run Text="running on" />
 				<wasm:Run Text="WebAssembly" />
 			</TextBlock>
 			<wasm:TextBlock Margin="0,0,0,10"
-							TextWrapping="Wrap">This application uses Roslyn to parse the left zone, and shows the console output, with entity framework core code being accepted.</wasm:TextBlock>
+							TextWrapping="Wrap">This application uses Roslyn to parse the left zone, and displays the console's output.
+				<Hyperlink NavigateUri="https://docs.microsoft.com/en-us/ef/core/get-started/netcore/new-db-sqlite">Entity Framework Core code</Hyperlink> is accepted, and uses local a
+				<Hyperlink NavigateUri="https://github.com/nventive/Uno.sqlite-wasm">SQLite store build for WebAssembly</Hyperlink> .</wasm:TextBlock>
 			<wasm:TextBlock Margin="0,0,0,10"
 							TextWrapping="Wrap">This application is running
 				<Bold>entirely locally</Bold> on your machine, no code is being sent out to the wire.
@@ -91,7 +94,7 @@
 			</ScrollViewer>
 		</Grid>
 		<StackPanel Grid.Row="2" Grid.ColumnSpan="2">
-			<TextBlock FontSize="10" Foreground="Gray" Text="Unknown">
+			<TextBlock FontSize="10" Foreground="Gray">
 				<Run Text="Build " />
 				<Run x:Name="buildVersion" FontWeight="Bold" />
 				<Run Text="| Roslyn " />
