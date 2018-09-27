@@ -57,7 +57,7 @@
 
 	</ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\SQLitePCLRaw.provider.wasm\SQLitePCLRaw.provider.wasm.csproj" />
+    <ProjectReference Include="..\..\..\SQLitePCLRaw.provider.wasm\Uno.SQLitePCLRaw.provider.wasm.csproj" />
   </ItemGroup>
   <Import Project="..\EFCoreSample.Shared\EFCoreSample.Shared.projitems" Label="Shared" Condition="Exists('..\EFCoreSample.Shared\EFCoreSample.Shared.projitems')" />
 </Project>
