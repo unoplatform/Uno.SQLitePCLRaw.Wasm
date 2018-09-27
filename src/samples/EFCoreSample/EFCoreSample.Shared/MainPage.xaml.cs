@@ -16,6 +16,7 @@ using EFCoreSample.Model;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Text;
+using System.Reflection;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -31,6 +32,8 @@ namespace EFCoreSample
 			this.InitializeComponent();
 			Console.SetOut(new TextBlockTextWriter(output));
 
+			SetVersions();
+
 #if __WASM__
 			codeBlock.IsReadOnly = false;
 #else
@@ -43,6 +46,21 @@ namespace EFCoreSample
 
 			codeBlock.Text += new StreamReader(GetType().Assembly.GetManifestResourceStream(resourceName)).ReadToEnd();
 		}
+
+		private void SetVersions()
+		{
+			buildVersion.Text = GetAssemblyVersion(this.GetType());
+#if __WASM__
+			roslynVersion.Text = GetAssemblyVersion(typeof(Microsoft.CodeAnalysis.Compilation));
+#else
+			roslynVersion.Text = "Not used";
+#endif
+			efCoreVersion.Text = GetAssemblyVersion(typeof(Microsoft.EntityFrameworkCore.DbContext));
+			sqLiteVersion.Text = SQLitePCL.raw.sqlite3_libversion_number().ToString();
+		}
+
+		private string GetAssemblyVersion(Type t)
+			=> t.GetTypeInfo().Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "Unkown";
 
 		private async void Run_Click(object sender, RoutedEventArgs e)
 		{

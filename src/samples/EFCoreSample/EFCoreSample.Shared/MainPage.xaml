@@ -13,6 +13,7 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="auto" />
 			<RowDefinition Height="*" />
+			<RowDefinition Height="auto" />
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*" />
@@ -33,14 +34,17 @@
 				<wasm:Run Text="WebAssembly" />
 			</TextBlock>
 			<wasm:TextBlock Margin="0,0,0,10"
-					   TextWrapping="Wrap">This application uses Roslyn to parse the left zone, and shows the console output, with entity framework core code being accepted.</wasm:TextBlock>
+							TextWrapping="Wrap">This application uses Roslyn to parse the left zone, and shows the console output, with entity framework core code being accepted.</wasm:TextBlock>
 			<wasm:TextBlock Margin="0,0,0,10"
-					   TextWrapping="Wrap">This application is running <Bold>entirely locally</Bold> on your machine, no code is being sent out to the wire.</wasm:TextBlock>
+							TextWrapping="Wrap">This application is running
+				<Bold>entirely locally</Bold> on your machine, no code is being sent out to the wire.
+			</wasm:TextBlock>
 			<wasm:TextBlock FontStyle="Italic"
-					   TextWrapping="Wrap">
-					Note that this app is running the mono interpreted mode
-					(which is about <Hyperlink NavigateUri="https://github.com/stefan-schweiger/dotWasmBenchmark">50x slower
-					than it should be</Hyperlink>), and is for the time being best experienced in Microsoft Edge or Firefox.
+							TextWrapping="Wrap">
+				Note that this app is running the mono interpreted mode
+					(which is about
+				<Hyperlink NavigateUri="https://github.com/stefan-schweiger/dotWasmBenchmark">50x slower
+					than it should be</Hyperlink> ), and is for the time being best experienced in Microsoft Edge or Firefox.
 			</wasm:TextBlock>
 		</StackPanel>
 
@@ -86,5 +90,17 @@
 						   Text="" />
 			</ScrollViewer>
 		</Grid>
+		<StackPanel Grid.Row="2" Grid.ColumnSpan="2">
+			<TextBlock FontSize="10" Foreground="Gray" Text="Unknown">
+				<Run Text="Build " />
+				<Run x:Name="buildVersion" FontWeight="Bold" />
+				<Run Text="| Roslyn " />
+				<Run x:Name="roslynVersion" FontWeight="Bold" />
+				<Run Text="| EF Core " />
+				<Run x:Name="efCoreVersion" FontWeight="Bold" />
+				<Run Text="| SQLite " />
+				<Run x:Name="sqLiteVersion" FontWeight="Bold" />
+			</TextBlock>
+		</StackPanel>
 	</Grid>
 </Page>
