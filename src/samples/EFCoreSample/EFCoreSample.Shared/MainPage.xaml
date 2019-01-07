@@ -22,7 +22,6 @@
 							LinkToOriginalApp="https://docs.microsoft.com/en-us/ef/core/get-started/netcore/new-db-sqlite"
 							LinkToAppAuthor="https://docs.microsoft.com/en-us/ef/core/get-started/netcore/new-db-sqlite"
 							LinkToUnoPlatformApp="https://github.com/nventive/Uno.SQLitePCLRaw.Wasm"
-							LinkToTwitter="https://twitter.com/?status=@UWPEverywhere:%20SQLitePCLRaw%20App%20on%20WASM%20https://github.com/nventive/Uno.SQLitePCLRaw.Wasm"
 							VersionNumber="">
 
 		<!-- About Content -->
