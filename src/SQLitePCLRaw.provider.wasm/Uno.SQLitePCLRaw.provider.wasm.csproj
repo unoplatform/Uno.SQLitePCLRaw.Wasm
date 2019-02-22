@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <PackageReference Include="SQLitePCLRaw.core" Version="1.1.11" />
-    <PackageReference Include="Uno.sqlite-wasm" Version="1.0.0-dev.715" ExcludeAssets="contentFiles" />
+    <PackageReference Include="Uno.sqlite-wasm" Version="1.0.0-dev.942" ExcludeAssets="contentFiles" />
   </ItemGroup>
 
 </Project>

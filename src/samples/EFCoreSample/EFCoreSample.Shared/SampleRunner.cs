@@ -81,8 +81,16 @@ namespace EFCoreSample
 
 			private CSharpLanguage()
 			{
-				_references = Directory.GetFiles("/managed", "*.dll")
-					.Select(f => MetadataReference.CreateFromFile(f))
+                var sdkFiles = this.GetType().Assembly.GetManifestResourceNames().Where(f => f.Contains("mono_sdk"));
+
+				_references = sdkFiles
+                    .Select(f =>
+                    {
+                        using (var s = this.GetType().Assembly.GetManifestResourceStream(f))
+                        {
+                            return MetadataReference.CreateFromStream(s);
+                        }
+                    })
 					.ToArray();
 			}
 

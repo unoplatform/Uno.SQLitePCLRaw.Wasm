@@ -115,7 +115,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.2" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Uno.UI" Version="1.40.0-dev.425" />
+    <PackageReference Include="Uno.UI" Version="1.43.0-dev.906" />
   </ItemGroup>
   <Import Project="..\EFCoreSample.Shared\EFCoreSample.Shared.projitems" Label="Shared" Condition="Exists('..\EFCoreSample.Shared\EFCoreSample.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
