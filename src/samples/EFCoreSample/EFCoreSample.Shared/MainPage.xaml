@@ -116,7 +116,7 @@
 		<!-- App Content -->
 		<local:UnoPlatformShell.AppContent>
 
-			<Grid Background="#2D2D30"
+			<Grid Background="white"
 				  Padding="16,8,16,16">
 
 				<Grid.RowDefinitions>
@@ -152,11 +152,12 @@
 							Margin="0,8,0,0"
 							Grid.Row="1">
 						<TextBox x:Name="codeBlock"
-								 Background="Transparent"
+								 Background="White"
 								 Text=""
+								 FontFamily="Courier New" 
 								 IsReadOnly="true"
 								 AcceptsReturn="true"
-								 Foreground="#F1F1F1" />
+								 Foreground="Black" />
 					</Border>
 
 					<!-- Execute Button -->

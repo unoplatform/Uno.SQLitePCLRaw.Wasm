@@ -12,7 +12,7 @@ namespace EFCoreSample.Wasm
 		static void Main(string[] args)
 		{
 #if DEBUG
-			ConfigureFilters(LogExtensionPoint.AmbientLoggerFactory);
+            ConfigureFilters(LogExtensionPoint.AmbientLoggerFactory);
 #endif
 
 			SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_WebAssembly());
