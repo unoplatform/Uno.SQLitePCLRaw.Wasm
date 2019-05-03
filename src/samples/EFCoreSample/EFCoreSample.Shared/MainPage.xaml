@@ -27,7 +27,7 @@
 
   <banner:BannerControl
     AppName="SQLitePCLRaw"
-		AppAuthor="Uno Platform"
+		AppAuthor="Microsoft"
 		LinkToOriginalApp="https://docs.microsoft.com/en-us/ef/core/get-started/netcore/new-db-sqlite"
 		LinkToAppAuthor="https://docs.microsoft.com/en-us/ef/core/get-started/netcore/new-db-sqlite"
 		LinkToUnoPlatformApp="https://github.com/nventive/Uno.SQLitePCLRaw.Wasm">
