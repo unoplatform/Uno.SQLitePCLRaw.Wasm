@@ -22,9 +22,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Uno.sqlite-wasm" Version="1.0.0-dev.942" />
-    <PackageReference Include="Uno.UI" Version="1.43.0-dev.906" />
-    <PackageReference Include="Uno.Wasm.Bootstrap" Version="1.0.0-dev.196" />
-    <DotNetCliToolReference Include="Uno.Wasm.Bootstrap.Cli" Version="1.0.0-dev.196" />
+    <PackageReference Include="Uno.UI" Version="1.45.0-dev.1422" />
+    <PackageReference Include="Uno.UI.Sample.Banner" Version="1.44.0-dev.16" />
+    <PackageReference Include="Uno.Wasm.Bootstrap" Version="1.0.0-dev.265" />
+    <DotNetCliToolReference Include="Uno.Wasm.Bootstrap.Cli" Version="1.0.0-dev.265" />
 
     <PackageReference Include="Microsoft.EntityFrameworkCore">
 			<Version>2.1.3</Version>
