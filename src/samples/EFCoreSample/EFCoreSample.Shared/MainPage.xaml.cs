@@ -32,8 +32,6 @@ namespace EFCoreSample
 			this.InitializeComponent();
 			Console.SetOut(new TextBlockTextWriter(output));
 
-			SetVersions();
-
 #if __WASM__
 			codeBlock.IsReadOnly = false;
 #else
@@ -45,18 +43,6 @@ namespace EFCoreSample
 			var resourceName = assembly.GetManifestResourceNames().First(n => n.EndsWith("SampleClass.cs"));
 
 			codeBlock.Text += new StreamReader(GetType().Assembly.GetManifestResourceStream(resourceName)).ReadToEnd();
-		}
-
-		private void SetVersions()
-		{
-			buildVersion.Text = GetAssemblyVersion(this.GetType());
-#if __WASM__
-			roslynVersion.Text = GetAssemblyVersion(typeof(Microsoft.CodeAnalysis.Compilation));
-#else
-			roslynVersion.Text = "Not used";
-#endif
-			efCoreVersion.Text = GetAssemblyVersion(typeof(Microsoft.EntityFrameworkCore.DbContext));
-			sqLiteVersion.Text = SQLitePCL.raw.sqlite3_libversion_number().ToString();
 		}
 
 		private string GetAssemblyVersion(Type t)

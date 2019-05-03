@@ -8,7 +8,8 @@
     <NoWarn>NU1701</NoWarn>
     <WasmShellILLinkerEnabled>false</WasmShellILLinkerEnabled>
     <WasmShellGenerateCompressedFiles Condition="'$(Configuration)'=='Debug'">false</WasmShellGenerateCompressedFiles>
-	</PropertyGroup>
+    <MonoWasmSDKUri>C:\Users\jerome.laban\Downloads\mono-wasm-29ff8e453d8.zip</MonoWasmSDKUri>
+  </PropertyGroup>
   <ItemGroup>
     <Content Include="..\EFCoreSample.UWP\Assets\*.png" Link="Assets\%(FileName)%(Extension)" />
   </ItemGroup>
@@ -21,9 +22,10 @@
     <LinkerDescriptor Include="LinkerConfig.xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Uno.sqlite-wasm" Version="1.0.0-dev.942" />
-    <PackageReference Include="Uno.UI" Version="1.43.0-dev.906" />
-    <PackageReference Include="Uno.Wasm.Bootstrap" Version="1.0.0-dev.196" />
+    <PackageReference Include="SQLitePCLRaw.provider.e_sqlite3.netstandard11" Version="1.1.13" />
+    <PackageReference Include="Uno.sqlite-wasm" Version="1.1.0-dev.4242" />
+    <PackageReference Include="Uno.UI" Version="1.45.0-dev.1366" />
+    <PackageReference Include="Uno.Wasm.Bootstrap" Version="1.0.0-dev.263" />
     <DotNetCliToolReference Include="Uno.Wasm.Bootstrap.Cli" Version="1.0.0-dev.196" />
 
     <PackageReference Include="Microsoft.EntityFrameworkCore">
@@ -45,8 +47,5 @@
 		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="2.8.3" />
 
 	</ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\SQLitePCLRaw.provider.wasm\Uno.SQLitePCLRaw.provider.wasm.csproj" />
-  </ItemGroup>
   <Import Project="..\EFCoreSample.Shared\EFCoreSample.Shared.projitems" Label="Shared" Condition="Exists('..\EFCoreSample.Shared\EFCoreSample.Shared.projitems')" />
 </Project>

@@ -7,15 +7,20 @@ namespace EFCoreSample.Wasm
 {
 	public class Program
 	{
+        [DllImport("test")]
+        public extern void test();
+
 		private static App _app;
 
 		static void Main(string[] args)
 		{
+            test();
+
 #if DEBUG
             ConfigureFilters(LogExtensionPoint.AmbientLoggerFactory);
 #endif
 
-			SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_WebAssembly());
+			SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_e_sqlite3());
 
 			Windows.UI.Xaml.Application.Start(_ => _app = new App());
 		}

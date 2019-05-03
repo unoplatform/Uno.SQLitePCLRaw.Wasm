@@ -16,106 +16,6 @@
 		</ResourceDictionary>
 	</Page.Resources>
 
-	<!-- UnoPlatformShell -->
-	<local:UnoPlatformShell AppName="SQLitePCLRaw"
-							AppAuthor="Microsoft"
-							LinkToOriginalApp="https://docs.microsoft.com/en-us/ef/core/get-started/netcore/new-db-sqlite"
-							LinkToAppAuthor="https://docs.microsoft.com/en-us/ef/core/get-started/netcore/new-db-sqlite"
-							LinkToUnoPlatformApp="https://github.com/nventive/Uno.SQLitePCLRaw.Wasm"
-							VersionNumber="">
-
-		<!-- About Content -->
-		<local:UnoPlatformShell.AboutContent>
-			<StackPanel>
-
-				<!-- About Content Line 1 -->
-				<TextBlock TextWrapping="Wrap"
-						   Foreground="{StaticResource Color02Brush}"
-						   FontStyle="Italic"
-						   FontSize="14">
-						
-					This application uses Roslyn to parse the left zone, and displays the console's output. 
-					<Hyperlink NavigateUri="https://docs.microsoft.com/en-us/ef/core/get-started/netcore/new-db-sqlite"
-							   Foreground="{StaticResource Color02Brush}">
-						<Bold>
-							<Underline>
-								Entity Framework Core code
-							</Underline>
-						</Bold>
-					</Hyperlink> 
-					is accepted, and uses local a
-					<Hyperlink NavigateUri="https://github.com/nventive/Uno.sqlite-wasm"
-							   Foreground="{StaticResource Color02Brush}">
-						<Bold>
-							<Underline>
-								SQLite store build for WebAssembly
-							</Underline>
-						</Bold>
-					</Hyperlink> .
-				</TextBlock>
-
-				<!-- About Content Line 2 -->
-				<TextBlock TextWrapping="Wrap"
-						   Foreground="{StaticResource Color02Brush}"
-						   FontStyle="Italic"
-						   FontSize="14"
-						   Margin="0,16,0,0">
-						
-					This application is running 
-					<Bold>
-						entirely locally
-					</Bold> 
-					on your machine, no code is being sent out to the wire.
-				</TextBlock>
-
-				<!-- About Content Line 3 -->
-				<TextBlock TextWrapping="Wrap"
-						   Foreground="{StaticResource Color02Brush}"
-						   FontStyle="Italic"
-						   FontSize="12"
-						   Margin="0,16,0,0">
-					
-					The Mono runtime is using the interpreted mode (which is currently about 
-					
-					<!-- Link to WASM Benchmark -->
-					<Hyperlink NavigateUri="https://github.com/stefan-schweiger/dotWasmBenchmark"
-							   Foreground="{StaticResource Color02Brush}">
-						<Bold>
-							<Underline>
-								50x slower than it should be
-							</Underline>
-						</Bold>
-					</Hyperlink>
-					). For a better experience run it in Microsoft Edge or Mozilla Firefox.
-				</TextBlock>
-
-				<!-- Info -->
-				<StackPanel Grid.Row="1"
-							Grid.ColumnSpan="3"
-							Margin="0,16,0,24">
-					<TextBlock TextWrapping="Wrap"
-							   FontSize="10"
-							   Foreground="{StaticResource Color02Brush}">
-						<Run Text="Build " />
-						<Run x:Name="buildVersion"
-							 FontWeight="Bold" />
-						<Run Text="| Roslyn " />
-						<Run x:Name="roslynVersion"
-							 FontWeight="Bold" />
-						<Run Text="| EF Core " />
-						<Run x:Name="efCoreVersion"
-							 FontWeight="Bold" />
-						<Run Text="| SQLite " />
-						<Run x:Name="sqLiteVersion"
-							 FontWeight="Bold" />
-					</TextBlock>
-				</StackPanel>
-			</StackPanel>
-		</local:UnoPlatformShell.AboutContent>
-
-		<!-- App Content -->
-		<local:UnoPlatformShell.AppContent>
-
 			<Grid Background="white"
 				  Padding="16,8,16,16">
 
@@ -142,7 +42,6 @@
 
 					<!-- Title -->
 					<TextBlock Text="Code"
-							   Foreground="{StaticResource Color02Brush}"
 							   FontSize="20"
 							   FontWeight="Bold"
 							   Grid.Row="0" />
@@ -164,7 +63,6 @@
 					<Button Content="Execute"
 							Click="Run_Click"
 							Background="DimGray"
-							Foreground="{StaticResource Color02Brush}"
 							Margin="0,12,0,0"
 							Grid.Row="2" />
 				</Grid>
@@ -180,7 +78,6 @@
 
 					<!-- Title -->
 					<TextBlock Text="Console output"
-							   Foreground="{StaticResource Color02Brush}"
 							   FontSize="20"
 							   FontWeight="Bold"
 							   Grid.Row="0" />
@@ -201,6 +98,4 @@
 					</Border>
 				</Grid>
 			</Grid>
-		</local:UnoPlatformShell.AppContent>
-	</local:UnoPlatformShell>
 </Page>
