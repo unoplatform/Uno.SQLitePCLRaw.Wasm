@@ -26,14 +26,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Model\Post.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SampleClass.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SampleRunner.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UnoPlatformShell.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)MainPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)UnoPlatformShell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
