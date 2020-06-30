@@ -36,6 +36,7 @@
 	<assembly fullname="System.Composition.Runtime"/>
 	<assembly fullname="System.Composition.AttributedModel"/>
 	<assembly fullname="System.Composition.TypedParts"/>
+	<assembly fullname="System.Reflection.Metadata"/>
 	<assembly fullname="mscorlib"/>
 
 </linker>

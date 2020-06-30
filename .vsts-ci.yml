@@ -1,39 +1,25 @@
-phases:
-- phase: VS_Latest
+jobs:
+
+- job: Windows
+
+  pool:
+    vmImage: 'windows-2019'
+
   variables:
     NUGET_PACKAGES: $(Agent.WorkFolder)\.nuget
     NUGET_HTTP_CACHE_PATH: $(Agent.WorkFolder)\.nuget-http-cache
 
   steps:
-  - task: GitVersion@3
+  - task: UseGitVersion@5
     inputs:
-      updateAssemblyInfo: false
-      
-  - task: NuGetToolInstaller@0
-    inputs:
-        versionSpec: 4.7.0
-        checkLatest: false
-
-  - task: NuGetCommand@2
-    inputs:
-      command: restore
-      solution: src/SQLitePCLRaw.Wasm.sln
-      selectOrConfig: select
-      includeNuGetOrg: true
-      verbosityRestore: Normal
+      versionSpec: '5.0'
+      useConfigFile: true
+      configFilePath: 'GitVersion.yml'
 
   - task: MSBuild@1
     inputs:
       solution: src/SQLitePCLRaw.Wasm.sln
-      msbuildLocationMethod: version
-      msbuildVersion: latest
-      msbuildArchitecture: x86
       msbuildArguments: /r /p:Configuration=Release "/p:PackageOutputPath=$(build.artifactstagingdirectory)\nuget" "/p:PackageVersion=%GITVERSION_FullSemVer%" "/p:InformationalVersion=%GITVERSION_InformationalVersion%" /detailedsummary
-      clean: false
-      maximumCpuCount: true
-      restoreNugetPackages: false
-      logProjectEvents: false
-      createLogFile: false
   
   - task: PublishBuildArtifacts@1
     condition: always()
@@ -46,5 +32,52 @@ phases:
     displayName: Publish Package Artifacts
     inputs:
       pathToPublish: .\src\samples\EFCoreSample\EFCoreSample.Wasm\bin\Release\netstandard2.0\dist
+      artifactType: container
+      artifactName: EFCoreSample-Wasm
+
+- job: Linux
+  container: unoplatform/wasm-build:2.0
+
+  pool:
+    vmImage: 'ubuntu-latest'
+
+  variables:
+    DotnetRuntimePath: /usr/share/dotnet
+
+  steps:
+  - checkout: self
+    clean: true
+
+  - task: UseDotNet@2
+    displayName: 'Use .Net Core runtime 2.1.0'
+    inputs:
+      packageType: runtime
+      version: 2.1.0
+      installationPath: '$(DotnetRuntimePath)'
+
+  - task: GitVersion@5
+    inputs:
+      useConfigFile: true
+      configFilePath: gitversion.yml
+      
+  - bash: |
+      cd ~
+      git clone https://github.com/emscripten-core/emsdk
+      cd emsdk
+      ./emsdk install sdk-1.39.11
+      ./emsdk activate sdk-1.39.11
+
+    displayName: 'Setup Emscripten'
+
+  - bash: |
+      source ~/emsdk/emsdk_env.sh
+      msbuild /r /p:Configuration=Release "/p:PackageOutputPath=$(build.artifactstagingdirectory)\nuget" "/p:PackageVersion=$GITVERSION_FULLSEMVER" "/p:InformationalVersion=$GITVERSION_INFORMATIONALVERSION" ./src/samples/EFCoreSample/EFCoreSample.Wasm/EFCoreSample.Wasm.csproj
+
+    displayName: 'Build Wasm Head'
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish Package Artifacts
+    inputs:
+      pathToPublish: ./src/samples/EFCoreSample/EFCoreSample.Wasm/bin/Release/netstandard2.0/dist
       artifactType: container
       artifactName: EFCoreSample-Wasm

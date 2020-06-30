@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
 using Uno.Extensions;
 using Windows.UI.Xaml;
@@ -14,9 +15,8 @@ namespace EFCoreSample.Wasm
 #if DEBUG
             ConfigureFilters(LogExtensionPoint.AmbientLoggerFactory);
 #endif
-
-			SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_WebAssembly());
-
+			SQLitePCL.Batteries.Init();
+			
 			Windows.UI.Xaml.Application.Start(_ => _app = new App());
 		}
 

@@ -151,7 +151,6 @@
           <Button Content="Execute"
 							Click="Run_Click"
 							Background="DimGray"
-							Foreground="{StaticResource Color02Brush}"
 							Margin="0,12,0,0"
 							Grid.Row="2" />
         </Grid>
