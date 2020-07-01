@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28016.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.128
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Uno.SQLitePCLRaw.provider.wasm", "SQLitePCLRaw.provider.wasm\Uno.SQLitePCLRaw.provider.wasm.csproj", "{2CFCD4F7-25D7-488D-A9C2-0785CBBDED96}"
 EndProject
@@ -22,6 +22,7 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		samples\EFCoreSample\EFCoreSample.Shared\EFCoreSample.Shared.projitems*{250391a3-6b51-4465-b051-a2b3889fa399}*SharedItemsImports = 4
+		samples\EFCoreSample\EFCoreSample.Shared\EFCoreSample.Shared.projitems*{5aeec1b7-c6ba-428c-9cdc-b3c249df032c}*SharedItemsImports = 5
 		samples\EFCoreSample\EFCoreSample.Shared\EFCoreSample.Shared.projitems*{6279c845-92f8-4333-ab99-3d213163593c}*SharedItemsImports = 13
 		samples\EFCoreSample\EFCoreSample.Shared\EFCoreSample.Shared.projitems*{6681c122-a8ac-4ae1-9c86-8defe95e9485}*SharedItemsImports = 4
 		samples\EFCoreSample\EFCoreSample.Shared\EFCoreSample.Shared.projitems*{d5c148b4-f060-4daf-a218-7b0724b1de7c}*SharedItemsImports = 4
