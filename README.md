@@ -30,3 +30,27 @@ The SQLite implementation is provided under the covers as a statically linkable 
 This sample demonstates the use of the SQLitePCLRaw provider for WebAssembly, along with EntityFramework Core and Roslyn using [Uno Platform](https://platform.uno).
 
 The application is built with all the EntityFramework Core binaries, allowing for custom code to be compiled and run locally in the browser, to test EF Core database scenarios dynamically.
+
+## Special considerations for Windows build servers
+
+If you're building a WebAssembly application with the `Uno.SQLitePCLRaw.provider.wasm` package on a Windows CI Server, you may get into an error like this one:
+
+```
+Error : System.InvalidOperationException: WSL is required for this build but could not be found (Searched for [C:\windows\sysnative\bash.exe]).
+```
+
+If your CI server does not have WSL enabled (e.g. Azure Devops Hosted Agents), you'll need to disable the static linking of the SQLite native library. It will generate an invalid package, but the build will finish properly. 
+
+> Note that this restriction is temporary until msbuild supports solution filters (most likely VS 16.7+), where removing some projects from a solution will be lots easier.
+
+Here's how to the static linking of the SQLite native library. In your `XX.Wasm.csproj` file, add the following:
+
+```xml
+<PropertyGroup>
+	<CanUseAOT Condition="$([MSBuild]::IsOsPlatform('Linux')) or ( $([MSBuild]::IsOsPlatform('Windows')) and '$(BUILD_REPOSITORY_PROVIDER)'=='' )">true</CanUseAOT>
+</PropertyGroup>
+
+<ItemGroup Condition="'$(CanUseAOT)'==''">
+	<PackageReference Include="Uno.sqlite-wasm" Version="1.1.0-dev.16828" IncludeAssets="none" />
+</ItemGroup>
+```
