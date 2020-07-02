@@ -11,10 +11,11 @@ jobs:
 
   steps:
   - task: UseGitVersion@5
+    displayName: gitversion
     inputs:
-      versionSpec: '5.0'
+      versionSpec: '5.x'
       useConfigFile: true
-      configFilePath: 'GitVersion.yml'
+      configFilePath: 'gitversion.yml'
 
   - task: MSBuild@1
     inputs:
@@ -27,13 +28,6 @@ jobs:
       PathtoPublish: '$(build.artifactstagingdirectory)'
       ArtifactName: uno.sqlitepclwasmprovider-drop
       publishLocation: Container
-        
-  - task: PublishBuildArtifacts@1
-    displayName: Publish Package Artifacts
-    inputs:
-      pathToPublish: .\src\samples\EFCoreSample\EFCoreSample.Wasm\bin\Release\netstandard2.0\dist
-      artifactType: container
-      artifactName: EFCoreSample-Wasm
 
 - job: Linux
   container: unoplatform/wasm-build:2.0
