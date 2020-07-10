@@ -61,7 +61,9 @@ namespace EFCoreSample
 			// optionsBuilder.UseLoggerFactory(LogExtensionPoint.AmbientLoggerFactory);
 			// optionsBuilder.EnableSensitiveDataLogging(true);
 
-			optionsBuilder.UseSqlite($"data source=local.db");
+			// When building in app, use Windows.Storage.ApplicationData.Current.LocalFolder.Path
+			// instead of /local to get browser persistence.
+			optionsBuilder.UseSqlite($"data source=/local/local.db");
 		}
 	}
 }
