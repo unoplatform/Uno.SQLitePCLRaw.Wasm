@@ -26,24 +26,26 @@ jobs:
           fetch-depth: 0 # Required for gitversion
           submodules: true
           
-      - name: Setup dotnet 3.1.409
-        uses: actions/setup-dotnet@v1.7.2
-        with:
-          dotnet-version: '3.1.409'
-          
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.9.7
         with:
           versionSpec: '5.x'
-      
-      - uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '6.0.x'
-          include-prerelease: true
           
       - name: Determine Version
         id: gitversion
         uses: gittools/actions/gitversion/execute@v0.9.7
+        with:
+          useConfigFile: true
+          
+      - name: Setup dotnet 5.0.x
+        uses: actions/setup-dotnet@v1.7.2
+        with:
+          dotnet-version: '5.0.x'
+         
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
+          include-prerelease: true
     
       - run: |
           cd src/samples/EFCoreSample/EFCoreSample.Wasm
