@@ -10,12 +10,10 @@ jobs:
     NUGET_HTTP_CACHE_PATH: $(Agent.WorkFolder)\.nuget-http-cache
 
   steps:
-  - task: UseGitVersion@5
-    displayName: gitversion
-    inputs:
-      versionSpec: '5.x'
-      useConfigFile: true
-      configFilePath: 'gitversion.yml'
+  - checkout: self
+    clean: true
+
+  - template: gitversion-step.yml
 
   - task: UseDotNet@2
     displayName: 'Use .NET 5 SDK'
@@ -29,7 +27,7 @@ jobs:
       includePreviewVersions: true
 
   - powershell: |
-      dotnet build /r /p:Configuration=Release src/SQLitePCLRaw.Wasm.sln "/p:PackageOutputPath=$(build.artifactstagingdirectory)\nuget" "/p:PackageVersion=%GITVERSION_FullSemVer%" "/p:InformationalVersion=%GITVERSION_InformationalVersion%" /detailedsummary
+      dotnet build /r /p:Configuration=Release src/SQLitePCLRaw.Wasm.sln "/p:PackageOutputPath=$(build.artifactstagingdirectory)\nuget" "/p:PackageVersion=$env:GITVERSION_FullSemVer" "/p:InformationalVersion=$env:GITVERSION_InformationalVersion" /detailedsummary
   
   - task: PublishBuildArtifacts@1
     condition: always()
@@ -50,6 +48,8 @@ jobs:
   steps:
   - checkout: self
     clean: true
+
+  - template: gitversion-step.yml
 
   - task: UseDotNet@2
     displayName: 'Use .NET 5 SDK'
