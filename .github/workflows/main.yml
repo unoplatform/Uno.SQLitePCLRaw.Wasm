@@ -14,7 +14,7 @@ on:
 jobs:
   build_and_deploy_job:
     env:
-      DIST_PATH: src/SQLitePCLRaw.provider.wasm/bin/Release/net6.0/dist
+      DIST_PATH: src/samples/EFCoreSample/EFCoreSample.Wasm/bin/Release/net6.0/dist
 
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
@@ -31,13 +31,21 @@ jobs:
         with:
           dotnet-version: '3.1.409'
           
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9.7
+        with:
+          versionSpec: '5.x'
+      
       - uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '6.0.x'
           include-prerelease: true
           
+      - name: Determine Version
+        uses: gittools/actions/gitversion/execute@v0.9.7
+    
       - run: |
-          cd src/SQLitePCLRaw.provider.wasm
+          cd src/samples/EFCoreSample/EFCoreSample.Wasm
           dotnet build -c Release
 
       - uses: actions/upload-artifact@v2
