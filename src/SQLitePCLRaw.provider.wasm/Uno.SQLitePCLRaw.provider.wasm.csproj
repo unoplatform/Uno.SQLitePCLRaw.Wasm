@@ -19,7 +19,7 @@
 
   <ItemGroup>
 		<PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="2.0.5-pre20210521085756" />
-		<PackageReference Include="Uno.sqlite-wasm" Version="3.34.1.3" IncludeAssets="none" />
+		<PackageReference Include="Uno.sqlite-wasm" Version="3.34.1.3" IncludeAssets="none" ExcludeAssets="none" />
   </ItemGroup>
 	
 	<ItemGroup>
