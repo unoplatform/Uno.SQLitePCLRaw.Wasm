@@ -46,7 +46,7 @@ jobs:
     
       - run: |
           cd src/samples/EFCoreSample/EFCoreSample.Wasm
-          dotnet build -c Release
+          dotnet build -c Release "/p:PackageVersion=${{ env.GITVERSION_FullSemVer }}
 
       - uses: actions/upload-artifact@v2
         with:
