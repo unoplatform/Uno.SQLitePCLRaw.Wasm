@@ -2,59 +2,62 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <WasmHead>true</WasmHead>
     <DefineConstants>$(DefineConstants);__WASM__</DefineConstants>
     <NoWarn>NU1701</NoWarn>
-    <WasmShellILLinkerEnabled>false</WasmShellILLinkerEnabled>
-    <WasmShellGenerateCompressedFiles Condition="'$(Configuration)'=='Debug'">false</WasmShellGenerateCompressedFiles>
-
-		<CanUseAOT Condition="$([MSBuild]::IsOsPlatform('Linux')) or ( $([MSBuild]::IsOsPlatform('Windows')) and '$(BUILD_REPOSITORY_PROVIDER)'=='' )">true</CanUseAOT>
+		<WasmShellEnableEmccProfiling>true</WasmShellEnableEmccProfiling>
+		<WasmShellNinjaAdditionalParameters>-v</WasmShellNinjaAdditionalParameters>
 	</PropertyGroup>
   <ItemGroup>
     <Content Include="..\EFCoreSample.UWP\Assets\*.png" Link="Assets\%(FileName)%(Extension)" />
   </ItemGroup>
-  <ItemGroup>
+	<ItemGroup>
     <EmbeddedResource Include="WasmCSS\Fonts.css" />
     <EmbeddedResource Include="WasmScripts\*.js" />
-    <EmbeddedResource Include="mono-sdk\*.dll" />
+    <EmbeddedResource Include="dotnet-sdk\*.dll" />
   </ItemGroup>
   <ItemGroup>
     <LinkerDescriptor Include="LinkerConfig.xml" />
   </ItemGroup>
   <ItemGroup>
-		<PackageReference Include="Uno.UI.WebAssembly" Version="3.6.0-dev.62" />
+		<PackageReference Include="Microsoft.Windows.Compatibility" Version="5.0.0" />
+		<PackageReference Include="Uno.Extensions.Logging.WebAssembly.Console" Version="1.3.0-dev.1" />
+		<PackageReference Include="Uno.UI.WebAssembly" Version="3.10.0-dev.156" />
 		<PackageReference Include="Uno.UI.Sample.Banner" Version="1.44.0-dev.33" />
-    <PackageReference Include="Uno.Wasm.Bootstrap" Version="2.0.0-dev.163" />
-		<PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="2.0.0-dev.163" />
+    <PackageReference Include="Uno.Wasm.Bootstrap" Version="3.0.0-dev.127" />
+		<PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="3.0.0-dev.127" />
+		<PackageReference Include="SQLitePCLRaw.bundle_sqlite3" Version="2.0.5-pre20210521085756" />
+		<PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="2.0.5-pre20210521085756" />
 
-    <PackageReference Include="Microsoft.EntityFrameworkCore">
-			<Version>3.1.5</Version>
+		<PackageReference Include="Microsoft.EntityFrameworkCore">
+			<Version>6.0.0-preview.6.21352.1</Version>
+		</PackageReference>
+		<!-- https://docs.microsoft.com/en-us/dotnet/standard/data/sqlite/custom-versions?tabs=netcore-cli -->
+    <PackageReference Include="Microsoft.Data.Sqlite.Core">
+			<Version>6.0.0-preview.6.21352.1</Version>
 		</PackageReference>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design">
-			<Version>3.1.5</Version>
+			<Version>6.0.0-preview.6.21352.1</Version>
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite">
-			<Version>3.1.5</Version>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core">
+			<Version>6.0.0-preview.6.21352.1</Version>
 		</PackageReference>
 		
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.5" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.2" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.2" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0-preview.6.21352.12" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="6.0.0-preview.6.21352.12" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="6.0.0-preview.6.21352.12" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.2" />
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.6.0" />
-		<PackageReference Include="microsoft.codeanalysis.workspaces.common" Version="3.6.0" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.10.0-1.final" />
+		<PackageReference Include="microsoft.codeanalysis.workspaces.common" Version="3.10.0-1.final" />
 		<PackageReference Include="Microsoft.TypeScript.Compiler" Version="2.8.3" />
 		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="2.8.3" />
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(CanUseAOT)'==''">
-		<PackageReference Include="Uno.sqlite-wasm" Version="1.1.1-dev.22605" IncludeAssets="none" />
-	</ItemGroup>
-	<ItemGroup Condition="'$(CanUseAOT)'!=''">
-		<PackageReference Include="Uno.sqlite-wasm" Version="1.1.1-dev.22605" />
+	<ItemGroup>
+		<PackageReference Include="Uno.sqlite-wasm" Version="3.34.1.3" />
 	</ItemGroup>
 
 	<ItemGroup>
