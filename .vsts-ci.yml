@@ -17,6 +17,12 @@ jobs:
       useConfigFile: true
       configFilePath: 'gitversion.yml'
 
+  - task: UseDotNet@2
+    displayName: 'Use .NET 6 SDK'
+    inputs:
+      version: 6.x
+      includePreviewVersions: true
+
   - task: MSBuild@1
     inputs:
       solution: src/SQLitePCLRaw.Wasm.sln
@@ -53,25 +59,21 @@ jobs:
     inputs:
       useConfigFile: true
       configFilePath: gitversion.yml
-      
-  - bash: |
-      cd ~
-      git clone --branch 1.39.11 https://github.com/emscripten-core/emsdk
-      cd emsdk
-      ./emsdk install sdk-1.39.11
-      ./emsdk activate sdk-1.39.11
 
-    displayName: 'Setup Emscripten'
+  - task: UseDotNet@2
+    displayName: 'Use .NET 6 SDK'
+    inputs:
+      version: 6.x
+      includePreviewVersions: true
 
   - bash: |
-      source ~/emsdk/emsdk_env.sh
-      msbuild /r /p:Configuration=Release "/p:PackageOutputPath=$(build.artifactstagingdirectory)\nuget" "/p:PackageVersion=$GITVERSION_FULLSEMVER" "/p:InformationalVersion=$GITVERSION_INFORMATIONALVERSION" ./src/samples/EFCoreSample/EFCoreSample.Wasm/EFCoreSample.Wasm.csproj
+      dotnet msbuild /r /p:Configuration=Release "/p:PackageOutputPath=$(build.artifactstagingdirectory)\nuget" "/p:PackageVersion=$GITVERSION_FULLSEMVER" "/p:InformationalVersion=$GITVERSION_INFORMATIONALVERSION" ./src/samples/EFCoreSample/EFCoreSample.Wasm/EFCoreSample.Wasm.csproj
 
     displayName: 'Build Wasm Head'
 
   - task: PublishBuildArtifacts@1
     displayName: Publish Package Artifacts
     inputs:
-      pathToPublish: ./src/samples/EFCoreSample/EFCoreSample.Wasm/bin/Release/netstandard2.0/dist
+      pathToPublish: ./src/samples/EFCoreSample/EFCoreSample.Wasm/bin/Release/net5.0/dist
       artifactType: container
       artifactName: EFCoreSample-Wasm
