@@ -27,7 +27,7 @@ jobs:
       includePreviewVersions: true
 
   - powershell: |
-      dotnet build /r /p:Configuration=Release src/SQLitePCLRaw.Wasm.sln "/p:PackageOutputPath=$(build.artifactstagingdirectory)\nuget" "/p:PackageVersion=$env:GITVERSION_FullSemVer" "/p:InformationalVersion=$env:GITVERSION_InformationalVersion" /detailedsummary
+      dotnet build /r /p:Configuration=Release src/SQLitePCLRaw.Wasm-ci.slnf "/p:PackageOutputPath=$(build.artifactstagingdirectory)\nuget" "/p:PackageVersion=$env:GITVERSION_FullSemVer" "/p:InformationalVersion=$env:GITVERSION_InformationalVersion" /detailedsummary
   
   - task: PublishBuildArtifacts@1
     condition: always()
@@ -70,6 +70,6 @@ jobs:
   - task: PublishBuildArtifacts@1
     displayName: Publish Package Artifacts
     inputs:
-      pathToPublish: ./src/samples/EFCoreSample/EFCoreSample.Wasm/bin/Release/net5.0/dist
+      pathToPublish: ./src/samples/EFCoreSample/EFCoreSample.Wasm/bin/Release/net6.0/dist
       artifactType: container
       artifactName: EFCoreSample-Wasm

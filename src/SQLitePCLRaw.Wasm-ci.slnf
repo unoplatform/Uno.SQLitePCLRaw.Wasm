@@ -1,0 +1,10 @@
+{
+  "solution": {
+    "path": "SQLitePCLRaw.Wasm.sln",
+    "projects": [
+      "SQLitePCLRaw.provider.wasm\\Uno.SQLitePCLRaw.provider.wasm.csproj",
+      "samples\\EFCoreSample\\EFCoreSample.Shared\\EFCoreSample.Shared.shproj",
+      "samples\\EFCoreSample\\EFCoreSample.Wasm\\EFCoreSample.Wasm.csproj"
+    ]
+  }
+}
