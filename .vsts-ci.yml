@@ -62,11 +62,6 @@ jobs:
       version: 6.x
       includePreviewVersions: true
 
-  - task: GitVersion@5
-    inputs:
-      useConfigFile: true
-      configFilePath: gitversion.yml
-
   - bash: |
       dotnet msbuild /r /p:Configuration=Release "/p:PackageOutputPath=$(build.artifactstagingdirectory)\nuget" "/p:PackageVersion=$GITVERSION_FULLSEMVER" "/p:InformationalVersion=$GITVERSION_INFORMATIONALVERSION" ./src/samples/EFCoreSample/EFCoreSample.Wasm/EFCoreSample.Wasm.csproj
 
