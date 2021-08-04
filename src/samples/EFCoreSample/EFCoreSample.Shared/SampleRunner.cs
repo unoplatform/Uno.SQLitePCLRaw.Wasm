@@ -81,7 +81,7 @@ namespace EFCoreSample
 
 			private CSharpLanguage()
 			{
-                var sdkFiles = this.GetType().Assembly.GetManifestResourceNames().Where(f => f.Contains("mono_sdk"));
+                var sdkFiles = this.GetType().Assembly.GetManifestResourceNames().Where(f => f.Contains("dotnet_sdk"));
 
 				_references = sdkFiles
                     .Select(f =>

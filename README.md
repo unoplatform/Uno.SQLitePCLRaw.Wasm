@@ -17,7 +17,17 @@ The Nuget package is available here: [Uno.SQLitePCLRaw.provider.wasm](https://ww
 SQLitePCL.Batteries.Init();
 ```
 
-That's it !
+## Usage With sqlite-net-pcl
+
+When using the SQLitePCL.Raw with sqlite-net-pcl, you'll need additional configuration:
+
+```xml
+<PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
+<PackageReference Include="Uno.SQLitePCLRaw.provider.wasm" Version="3.0.15" />
+<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.0.5-pre20210521085756" IncludeAssets="none" />
+```
+
+The `SQLitePCLRaw.bundle_green` must be exlcuded explicitly as it does not work properly with WebAssembly, but cannot be removed as it is a transitive dependency of sqlite-net-pcl. Adding this last reference ensure that the proper native library is loaded.
 
 ## Architecture
 
@@ -31,7 +41,7 @@ This sample demonstates the use of the SQLitePCLRaw provider for WebAssembly, al
 
 The application is built with all the EntityFramework Core binaries, allowing for custom code to be compiled and run locally in the browser, to test EF Core database scenarios dynamically.
 
-## Special considerations for Windows build servers
+## Special considerations for Windows build servers when using Uno.Bootstrapper 2.x
 
 If you're building a WebAssembly application with the `Uno.SQLitePCLRaw.provider.wasm` package on a Windows CI Server, you may get into an error like this one:
 
