@@ -29,7 +29,7 @@ jobs:
       includePreviewVersions: true
 
   - powershell: |
-      dotnet build /r /p:Configuration=Release "/p:PackageOutputPath=$(build.artifactstagingdirectory)\nuget" "/p:PackageVersion=%GITVERSION_FullSemVer%" "/p:InformationalVersion=%GITVERSION_InformationalVersion%" /detailedsummary
+      dotnet build /r /p:Configuration=Release src/SQLitePCLRaw.Wasm.sln "/p:PackageOutputPath=$(build.artifactstagingdirectory)\nuget" "/p:PackageVersion=%GITVERSION_FullSemVer%" "/p:InformationalVersion=%GITVERSION_InformationalVersion%" /detailedsummary
   
   - task: PublishBuildArtifacts@1
     condition: always()
@@ -52,18 +52,6 @@ jobs:
     clean: true
 
   - task: UseDotNet@2
-    displayName: 'Use .Net Core runtime 2.1.0'
-    inputs:
-      packageType: runtime
-      version: 2.1.0
-      installationPath: '$(DotnetRuntimePath)'
-
-  - task: GitVersion@5
-    inputs:
-      useConfigFile: true
-      configFilePath: gitversion.yml
-
-  - task: UseDotNet@2
     displayName: 'Use .NET 5 SDK'
     inputs:
       version: 5.x
@@ -73,6 +61,11 @@ jobs:
     inputs:
       version: 6.x
       includePreviewVersions: true
+
+  - task: GitVersion@5
+    inputs:
+      useConfigFile: true
+      configFilePath: gitversion.yml
 
   - bash: |
       dotnet msbuild /r /p:Configuration=Release "/p:PackageOutputPath=$(build.artifactstagingdirectory)\nuget" "/p:PackageVersion=$GITVERSION_FULLSEMVER" "/p:InformationalVersion=$GITVERSION_INFORMATIONALVERSION" ./src/samples/EFCoreSample/EFCoreSample.Wasm/EFCoreSample.Wasm.csproj
