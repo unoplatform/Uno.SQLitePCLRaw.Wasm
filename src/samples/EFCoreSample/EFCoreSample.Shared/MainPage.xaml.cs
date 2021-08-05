@@ -35,10 +35,15 @@ namespace EFCoreSample
 			SetVersions();
 
 #if __WASM__
-			codeBlock.IsReadOnly = false;
+			// codeBlock.IsReadOnly = false;
 #else
 			codeBlock.Text = "/* Code edition is only available for WebAssembly */\n\n";
 #endif
+
+			codeBlock.SizeChanged += (snd, evt) =>
+			{
+				codeBlock.ExecuteJavascript("editor.layout();");
+			};
 
 			var assembly = GetType().Assembly;
 
@@ -65,7 +70,7 @@ namespace EFCoreSample
 		private async void Run_Click(object sender, RoutedEventArgs e)
 		{
 #if __WASM__
-			await SampleRunner.RunSample(codeBlock.Text);
+			await SampleRunner.RunSample(codeBlock.Text.Replace("\\n", "\n"));
 #else
 			await SampleClass.Run();
 #endif
