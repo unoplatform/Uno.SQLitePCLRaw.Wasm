@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace EFCoreSample
 {
@@ -57,13 +58,29 @@ namespace EFCoreSample
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			// Uncomment those to enable logging
-			// optionsBuilder.UseLoggerFactory(LogExtensionPoint.AmbientLoggerFactory);
-			// optionsBuilder.EnableSensitiveDataLogging(true);
+			// Uncomment to see EF Core logs in the browser debugger
+			// EnableLogging(optionsBuilder);
 
 			// When building in app, use Windows.Storage.ApplicationData.Current.LocalFolder.Path
 			// instead of /local to get browser persistence.
 			optionsBuilder.UseSqlite($"data source=/local/local.db");
+		}
+
+
+		private void EnableLogging(DbContextOptionsBuilder optionsBuilder)
+		{
+			var factory = LoggerFactory.Create(builder =>
+			{
+				// The Console logger cannot yet be used until .NET WebAssembly supports threading
+				builder.AddProvider(new global::Uno.Extensions.Logging.WebAssembly.WebAssemblyConsoleLoggerProvider());
+
+				// Exclude logs below this level
+				builder.SetMinimumLevel(LogLevel.Information);
+			});
+
+			// Uncomment those to enable logging
+			optionsBuilder.UseLoggerFactory(factory);
+			optionsBuilder.EnableSensitiveDataLogging(true);
 		}
 	}
 }

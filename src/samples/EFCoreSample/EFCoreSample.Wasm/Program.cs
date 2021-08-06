@@ -18,8 +18,6 @@ namespace EFCoreSample.Wasm
 #endif  
             SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlite3());
 
-            //SQLitePCL.Batteries.Init();
-
             Windows.UI.Xaml.Application.Start(_ => _app = new App());
 		}
         /// <summary>
