@@ -14,6 +14,9 @@
 
 		<Product>$(AssemblyName) ($(TargetFramework))</Product>
 		<DefaultLanguage>en-US</DefaultLanguage>
+		
+		<!-- Remove after .NET 6 RC1 update -->
+		<DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
 	</PropertyGroup>
 
 	<PropertyGroup>
