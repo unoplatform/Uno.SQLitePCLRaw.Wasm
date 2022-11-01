@@ -1,5 +1,5 @@
 ﻿<linker>
-  <assembly fullname="EFCoreSample.Wasm" />
+	<assembly fullname="EFCoreSample.Wasm" />
 	<assembly fullname="Uno.UI" />
 	<assembly fullname="System.Private.CoreLib" />
 	
@@ -14,13 +14,14 @@
 	</assembly>
 
 	<assembly fullname="System.Core">
-	<!-- This is required by JSon.NET and any expression.Compile caller -->
-	<type fullname="System.Linq.Expressions*" />
-  </assembly>
+		<!-- This is required by JSon.NET and any expression.Compile caller -->
+		<type fullname="System.Linq.Expressions*" />
+	</assembly>
 
 	<!-- EFCore support -->
 	<assembly fullname="Microsoft.EntityFrameworkCore" />
-	<assembly fullname="System.Data" /> <!-- Needed by https://github.com/aspnet/EntityFrameworkCore/blob/2e1115f0f7ba318e1696841fe49993499cb9d8ae/src/EFCore.Relational/Storage/TypedRelationalValueBufferFactoryFactory.cs#L43 -->
+	<assembly fullname="System.Data" />
+	<!-- Needed by https://github.com/aspnet/EntityFrameworkCore/blob/2e1115f0f7ba318e1696841fe49993499cb9d8ae/src/EFCore.Relational/Storage/TypedRelationalValueBufferFactoryFactory.cs#L43 -->
 	<assembly fullname="Microsoft.EntityFrameworkCore.Relational" />
 	<assembly fullname="Microsoft.EntityFrameworkCore.Abstractions" />
 	<assembly fullname="Microsoft.EntityFrameworkCore.Sqlite" />
@@ -30,11 +31,12 @@
 	<assembly fullname="Microsoft.Extensions.Primitives" />
 
 	<assembly fullname="System.Core">
-		<type fullname="System.Linq.Queryable*" /> <!-- https://github.com/aspnet/EntityFrameworkCore/blob/2313de8e3a7d5d191b642f41db2755b048ba7845/src/EFCore/EntityFrameworkQueryableExtensions.cs#L30 -->
+		<type fullname="System.Linq.Queryable*" />
+		<!-- https://github.com/aspnet/EntityFrameworkCore/blob/2313de8e3a7d5d191b642f41db2755b048ba7845/src/EFCore/EntityFrameworkQueryableExtensions.cs#L30 -->
 	</assembly>
 
 	<!-- Roslyn -->
-	<assembly fullname="System.Security"/>   
+	<assembly fullname="System.Security"/>
 	<assembly fullname="Microsoft.CodeAnalysis"/>
 	<assembly fullname="Microsoft.CodeAnalysis.CSharp"/>
 	<!--<assembly fullname="Microsoft.CodeAnalysis.CSharp.Workspaces"/>-->

@@ -14,7 +14,7 @@ on:
 jobs:
   build_and_deploy_job:
     env:
-      DIST_PATH: src/samples/EFCoreSample/EFCoreSample.Wasm/bin/Release/net6.0/dist
+      DIST_PATH: src/samples/EFCoreSample/EFCoreSample.Wasm/bin/Release/net7.0/dist
 
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
@@ -45,7 +45,7 @@ jobs:
          
       - uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: '7.0.100-rc.2.22477.23'
           include-prerelease: true
     
       - run: |

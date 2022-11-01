@@ -21,9 +21,9 @@ jobs:
       version: 5.x
 
   - task: UseDotNet@2
-    displayName: 'Use .NET 6 SDK'
+    displayName: 'Use .NET 7 SDK'
     inputs:
-      version: 6.x
+      version: 7.0.100-rc.2.22477.23
       includePreviewVersions: true
 
   - powershell: |
@@ -57,9 +57,9 @@ jobs:
       version: 5.x
 
   - task: UseDotNet@2
-    displayName: 'Use .NET 6 SDK'
+    displayName: 'Use .NET 7 SDK'
     inputs:
-      version: 6.x
+      version: 7.0.100-rc.2.22477.23
       includePreviewVersions: true
 
   - bash: |
@@ -70,6 +70,6 @@ jobs:
   - task: PublishBuildArtifacts@1
     displayName: Publish Package Artifacts
     inputs:
-      pathToPublish: ./src/samples/EFCoreSample/EFCoreSample.Wasm/bin/Release/net6.0/dist
+      pathToPublish: ./src/samples/EFCoreSample/EFCoreSample.Wasm/bin/Release/net7.0/dist
       artifactType: container
       artifactName: EFCoreSample-Wasm
