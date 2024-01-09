@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<RootNamespace>Uno</RootNamespace>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<NoWarn>1591</NoWarn>
-		
+
 		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
 		<Authors>nventive</Authors>
 		<Company>nventive</Company>
@@ -14,15 +14,15 @@
 		<PackageIconUrl>https://nv-assets.azurewebsites.net/logos/uno.png</PackageIconUrl>
 		<RepositoryUrl>https://github.com/nventive/Uno.SQLitePCLRaw.Wasm</RepositoryUrl>
 		<Description>This package is an SQLitePCLRaw.core provider for WebAssembly</Description>
-		<Copyright>Copyright (C) 2015-2021 Uno Platform inc. - all rights reserved</Copyright>
+		<Copyright>Copyright (C) 2015-$([System.DateTime]::Now.ToString(`yyyy`)) Uno Platform inc. - all rights reserved</Copyright>
 	</PropertyGroup>
 
-  <ItemGroup>
+	<ItemGroup>
 		<PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="2.0.5-pre20210521085756" />
 		<PackageReference Include="SQLitePCLRaw.bundle_sqlite3" Version="2.0.5-pre20210521085756" />
-		<PackageReference Include="Uno.sqlite-wasm" Version="3.34.1.3" IncludeAssets="All" ExcludeAssets="content" PrivateAssets="none" />
-  </ItemGroup>
-	
+		<PackageReference Include="Uno.sqlite-wasm" Version="3.40.0.2" IncludeAssets="All" ExcludeAssets="content" PrivateAssets="none" />
+	</ItemGroup>
+
 	<ItemGroup>
 		<EmbeddedResource Include="LinkerDefinition.Wasm.xml">
 			<LogicalName>$(AssemblyName).xml</LogicalName>

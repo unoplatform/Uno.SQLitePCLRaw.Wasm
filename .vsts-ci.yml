@@ -3,11 +3,14 @@ jobs:
 - job: Windows
 
   pool:
-    vmImage: 'windows-2019'
+    vmImage: 'windows-latest'
 
   variables:
-    NUGET_PACKAGES: $(Agent.WorkFolder)\.nuget
-    NUGET_HTTP_CACHE_PATH: $(Agent.WorkFolder)\.nuget-http-cache
+    - name: NUGET_PACKAGES
+      value: $(Agent.WorkFolder)\.nuget
+    - name: NUGET_HTTP_CACHE_PATH
+      value: $(Agent.WorkFolder)\.nuget-http-cache
+    - group: 'Uno Platform authenticode signing'
 
   steps:
   - checkout: self
@@ -21,14 +24,30 @@ jobs:
       version: 5.x
 
   - task: UseDotNet@2
-    displayName: 'Use .NET 7 SDK'
+    displayName: 'Use .NET SDK'
     inputs:
-      version: 7.0.100-rc.2.22477.23
+      version: 8.0.100
       includePreviewVersions: true
 
   - powershell: |
       dotnet build /r /p:Configuration=Release src/SQLitePCLRaw.Wasm-ci.slnf "/p:PackageOutputPath=$(build.artifactstagingdirectory)\nuget" "/p:PackageVersion=$env:GITVERSION_FullSemVer" "/p:InformationalVersion=$env:GITVERSION_InformationalVersion" /detailedsummary
-  
+
+  - task: DotNetCoreInstaller@0
+    inputs:
+      version: '2.1.504'
+
+  - task: PowerShell@2
+    displayName: Authenticode Sign Packages
+    inputs:
+      filePath: build/Sign-Package.ps1
+    env:
+      SignClientUser: $(SignClientUser)
+      SignClientSecret: $(SignClientSecret)
+      SignPackageName: "Uno.SQLitePCLRaw.Wasm"
+      SignPackageDescription: "Uno.SQLitePCLRaw.Wasm"
+      ArtifactDirectory: $(build.artifactstagingdirectory)
+    condition: and(succeeded(), not(eq(variables['build.reason'], 'PullRequest')), not(eq(variables['SignClientSecret'], '')), not(eq(variables['SignClientUser'], '')))
+
   - task: PublishBuildArtifacts@1
     condition: always()
     inputs:
@@ -37,10 +56,10 @@ jobs:
       publishLocation: Container
 
 - job: Linux
-  container: unoplatform/wasm-build:3.0
-
   pool:
     vmImage: 'ubuntu-latest'
+
+  container: unoplatform/wasm-build:3.0
 
   variables:
     DotnetRuntimePath: /usr/share/dotnet
@@ -57,19 +76,19 @@ jobs:
       version: 5.x
 
   - task: UseDotNet@2
-    displayName: 'Use .NET 7 SDK'
+    displayName: 'Use .NET SDK'
     inputs:
-      version: 7.0.100-rc.2.22477.23
+      version: 8.0.100
       includePreviewVersions: true
 
   - bash: |
-      dotnet msbuild /r /p:Configuration=Release "/p:PackageOutputPath=$(build.artifactstagingdirectory)\nuget" "/p:PackageVersion=$GITVERSION_FULLSEMVER" "/p:InformationalVersion=$GITVERSION_INFORMATIONALVERSION" ./src/samples/EFCoreSample/EFCoreSample.Wasm/EFCoreSample.Wasm.csproj
+      dotnet build -c Release "/p:PackageOutputPath=$(build.artifactstagingdirectory)\nuget" "/p:PackageVersion=$GITVERSION_FULLSEMVER" "/p:InformationalVersion=$GITVERSION_INFORMATIONALVERSION" ./src/samples/EFCoreSample/EFCoreSample.Wasm/EFCoreSample.Wasm.csproj
 
     displayName: 'Build Wasm Head'
 
   - task: PublishBuildArtifacts@1
     displayName: Publish Package Artifacts
     inputs:
-      pathToPublish: ./src/samples/EFCoreSample/EFCoreSample.Wasm/bin/Release/net7.0/dist
+      pathToPublish: ./src/samples/EFCoreSample/EFCoreSample.Wasm/bin/Release/net8.0/dist
       artifactType: container
       artifactName: EFCoreSample-Wasm
