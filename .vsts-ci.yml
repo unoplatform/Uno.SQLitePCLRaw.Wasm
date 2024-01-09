@@ -35,7 +35,7 @@ jobs:
   - task: DotNetCoreInstaller@0
     inputs:
       version: '2.1.504'
-  
+
   - task: PowerShell@2
     displayName: Authenticode Sign Packages
     inputs:
@@ -56,8 +56,6 @@ jobs:
       publishLocation: Container
 
 - job: Linux
-  container: unoplatform/wasm-build:3.0
-
   pool:
     vmImage: 'ubuntu-latest'
 
@@ -76,13 +74,13 @@ jobs:
       version: 5.x
 
   - task: UseDotNet@2
-    displayName: 'Use .NET 7 SDK'
+    displayName: 'Use .NET SDK'
     inputs:
       version: 8.0.100
       includePreviewVersions: true
 
   - bash: |
-      dotnet msbuild /r /p:Configuration=Release "/p:PackageOutputPath=$(build.artifactstagingdirectory)\nuget" "/p:PackageVersion=$GITVERSION_FULLSEMVER" "/p:InformationalVersion=$GITVERSION_INFORMATIONALVERSION" ./src/samples/EFCoreSample/EFCoreSample.Wasm/EFCoreSample.Wasm.csproj
+      dotnet build -c Release "/p:PackageOutputPath=$(build.artifactstagingdirectory)\nuget" "/p:PackageVersion=$GITVERSION_FULLSEMVER" "/p:InformationalVersion=$GITVERSION_INFORMATIONALVERSION" ./src/samples/EFCoreSample/EFCoreSample.Wasm/EFCoreSample.Wasm.csproj
 
     displayName: 'Build Wasm Head'
 
