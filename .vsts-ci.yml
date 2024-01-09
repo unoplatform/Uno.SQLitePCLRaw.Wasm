@@ -6,8 +6,11 @@ jobs:
     vmImage: 'windows-latest'
 
   variables:
-    NUGET_PACKAGES: $(Agent.WorkFolder)\.nuget
-    NUGET_HTTP_CACHE_PATH: $(Agent.WorkFolder)\.nuget-http-cache
+    - name: NUGET_PACKAGES
+      value: $(Agent.WorkFolder)\.nuget
+    - name: NUGET_HTTP_CACHE_PATH
+      value: $(Agent.WorkFolder)\.nuget-http-cache
+    - group: 'Uno Platform authenticode signing'
 
   steps:
   - checkout: self
