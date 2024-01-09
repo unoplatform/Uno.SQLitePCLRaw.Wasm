@@ -3,7 +3,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
 using Uno;
 using Uno.Extensions;
-using Windows.UI.Xaml;
+using Microsoft.UI.Xaml;
 
 namespace EFCoreSample.Wasm
 {
@@ -18,7 +18,7 @@ namespace EFCoreSample.Wasm
 #endif  
             SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlite3());
 
-            Windows.UI.Xaml.Application.Start(_ => _app = new App());
+            Microsoft.UI.Xaml.Application.Start(_ => _app = new App());
 		}
         /// <summary>
         /// Configures global Uno Platform logging
