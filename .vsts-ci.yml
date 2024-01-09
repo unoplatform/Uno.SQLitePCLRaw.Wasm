@@ -59,6 +59,8 @@ jobs:
   pool:
     vmImage: 'ubuntu-latest'
 
+  container: unoplatform/wasm-build:3.0
+
   variables:
     DotnetRuntimePath: /usr/share/dotnet
 
