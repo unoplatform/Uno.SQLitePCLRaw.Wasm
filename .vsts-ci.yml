@@ -3,7 +3,7 @@ jobs:
 - job: Windows
 
   pool:
-    vmImage: 'windows-2019'
+    vmImage: 'windows-latest'
 
   variables:
     NUGET_PACKAGES: $(Agent.WorkFolder)\.nuget
@@ -21,14 +21,30 @@ jobs:
       version: 5.x
 
   - task: UseDotNet@2
-    displayName: 'Use .NET 7 SDK'
+    displayName: 'Use .NET SDK'
     inputs:
-      version: 7.0.100-rc.2.22477.23
+      version: 8.0.100
       includePreviewVersions: true
 
   - powershell: |
       dotnet build /r /p:Configuration=Release src/SQLitePCLRaw.Wasm-ci.slnf "/p:PackageOutputPath=$(build.artifactstagingdirectory)\nuget" "/p:PackageVersion=$env:GITVERSION_FullSemVer" "/p:InformationalVersion=$env:GITVERSION_InformationalVersion" /detailedsummary
+
+  - task: DotNetCoreInstaller@0
+    inputs:
+      version: '2.1.504'
   
+  - task: PowerShell@2
+    displayName: Authenticode Sign Packages
+    inputs:
+      filePath: build/Sign-Package.ps1
+    env:
+      SignClientUser: $(SignClientUser)
+      SignClientSecret: $(SignClientSecret)
+      SignPackageName: "Uno.SQLitePCLRaw.Wasm"
+      SignPackageDescription: "Uno.SQLitePCLRaw.Wasm"
+      ArtifactDirectory: $(build.artifactstagingdirectory)
+    condition: and(succeeded(), not(eq(variables['build.reason'], 'PullRequest')), not(eq(variables['SignClientSecret'], '')), not(eq(variables['SignClientUser'], '')))
+
   - task: PublishBuildArtifacts@1
     condition: always()
     inputs:
@@ -59,7 +75,7 @@ jobs:
   - task: UseDotNet@2
     displayName: 'Use .NET 7 SDK'
     inputs:
-      version: 7.0.100-rc.2.22477.23
+      version: 8.0.100
       includePreviewVersions: true
 
   - bash: |
@@ -70,6 +86,6 @@ jobs:
   - task: PublishBuildArtifacts@1
     displayName: Publish Package Artifacts
     inputs:
-      pathToPublish: ./src/samples/EFCoreSample/EFCoreSample.Wasm/bin/Release/net7.0/dist
+      pathToPublish: ./src/samples/EFCoreSample/EFCoreSample.Wasm/bin/Release/net8.0/dist
       artifactType: container
       artifactName: EFCoreSample-Wasm
