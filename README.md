@@ -24,7 +24,7 @@ When using the SQLitePCL.Raw with sqlite-net-pcl, you'll need additional configu
 ```xml
 <PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
 <PackageReference Include="Uno.SQLitePCLRaw.provider.wasm" Version="3.0.15" />
-<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.0.5-pre20210521085756" IncludeAssets="none" />
+<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.8" IncludeAssets="none" />
 ```
 
 The `SQLitePCLRaw.bundle_green` must be exlcuded explicitly as it does not work properly with WebAssembly, but cannot be removed as it is a transitive dependency of sqlite-net-pcl. Adding this last reference ensure that the proper native library is loaded.
