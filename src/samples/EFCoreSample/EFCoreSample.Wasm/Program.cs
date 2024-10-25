@@ -1,9 +1,12 @@
-﻿using System;
+﻿#define ENABLE_EXCEPTIONS_LOGGING
+
+using System;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
 using Uno;
 using Uno.Extensions;
 using Microsoft.UI.Xaml;
+using System.Runtime.InteropServices;
 
 namespace EFCoreSample.Wasm
 {
@@ -12,13 +15,26 @@ namespace EFCoreSample.Wasm
 		private static App _app;
 
 		static void Main(string[] args)
-		{
+        {
+            Console.WriteLine("-> Main");
+
+#if ENABLE_EXCEPTIONS_LOGGING
+            MonoInternals.mono_trace_enable(1);
+			MonoInternals.mono_trace_set_options("E:all");
+#endif
+
+            Console.WriteLine("-> InitializeLogging");
+
 #if DEBUG
             InitializeLogging();
 #endif  
             SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlite3());
 
+            Console.WriteLine("-> Before start");
+
             Microsoft.UI.Xaml.Application.Start(_ => _app = new App());
+
+            Console.WriteLine("<- After Main");
 		}
         /// <summary>
         /// Configures global Uno Platform logging
@@ -38,12 +54,12 @@ namespace EFCoreSample.Wasm
 #endif
 
                 // Exclude logs below this level
-                builder.SetMinimumLevel(LogLevel.Information);
+                builder.SetMinimumLevel(LogLevel.Trace);
 
                 // Default filters for Uno Platform namespaces
-                builder.AddFilter("Uno", LogLevel.Warning);
-                builder.AddFilter("Windows", LogLevel.Warning);
-                builder.AddFilter("Microsoft", LogLevel.Warning);
+                builder.AddFilter("Uno", LogLevel.Trace);
+                builder.AddFilter("Windows", LogLevel.Trace);
+                builder.AddFilter("Microsoft", LogLevel.Trace);
 
                 // Generic Xaml events
                 // builder.AddFilter("Microsoft.UI.Xaml", LogLevel.Debug );
@@ -75,5 +91,14 @@ namespace EFCoreSample.Wasm
 
             global::Uno.Extensions.LogExtensionPoint.AmbientLoggerFactory = factory;
         }
+    }
+
+    static class MonoInternals
+    {
+        [DllImport("__Native")]
+        internal static extern void mono_trace_enable(int enable);
+
+        [DllImport("__Native")]
+        internal static extern int mono_trace_set_options(string options);
     }
 }

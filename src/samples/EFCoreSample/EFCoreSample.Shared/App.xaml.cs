@@ -28,8 +28,12 @@ namespace EFCoreSample
 		/// </summary>
 		public App()
 		{
+			Console.WriteLine("-> App");
+
 			this.InitializeComponent();
 			this.Suspending += OnSuspending;
+
+			Console.WriteLine("<- App");
 		}
 
 		/// <summary>

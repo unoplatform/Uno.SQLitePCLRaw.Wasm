@@ -78,17 +78,17 @@ jobs:
   - task: UseDotNet@2
     displayName: 'Use .NET SDK'
     inputs:
-      version: 8.0.100
+      version: 9.0.100-rc.2.24474.11
       includePreviewVersions: true
 
   - bash: |
-      dotnet build -c Release "/p:PackageOutputPath=$(build.artifactstagingdirectory)\nuget" "/p:PackageVersion=$GITVERSION_FULLSEMVER" "/p:InformationalVersion=$GITVERSION_INFORMATIONALVERSION" ./src/samples/EFCoreSample/EFCoreSample.Wasm/EFCoreSample.Wasm.csproj
+      dotnet publish -c Release "/p:PackageOutputPath=$(build.artifactstagingdirectory)\nuget" "/p:PackageVersion=$GITVERSION_FULLSEMVER" "/p:InformationalVersion=$GITVERSION_INFORMATIONALVERSION" ./src/samples/EFCoreSample/EFCoreSample.Wasm/EFCoreSample.Wasm.csproj
 
     displayName: 'Build Wasm Head'
 
   - task: PublishBuildArtifacts@1
     displayName: Publish Package Artifacts
     inputs:
-      pathToPublish: ./src/samples/EFCoreSample/EFCoreSample.Wasm/bin/Release/net8.0/dist
+      pathToPublish: ./src/samples/EFCoreSample/EFCoreSample.Wasm/bin/Release/net9.0/publish/wwwroot
       artifactType: container
       artifactName: EFCoreSample-Wasm
