@@ -26,8 +26,11 @@ jobs:
   - task: UseDotNet@2
     displayName: 'Use .NET SDK'
     inputs:
-      version: 8.0.100
+      version: 9.0.100-rc.2.24474.11
       includePreviewVersions: true
+
+  - powershell: dotnet workload install wasm-tools
+    displayName: 'Install .NET Wasm Workload'
 
   - powershell: |
       dotnet build /r /p:Configuration=Release src/SQLitePCLRaw.Wasm-ci.slnf "/p:PackageOutputPath=$(build.artifactstagingdirectory)\nuget" "/p:PackageVersion=$env:GITVERSION_FullSemVer" "/p:InformationalVersion=$env:GITVERSION_InformationalVersion" /detailedsummary
@@ -82,7 +85,7 @@ jobs:
       includePreviewVersions: true
 
   - bash: dotnet workload install wasm-tools
-    displayName: 'Install .NET Workload'
+    displayName: 'Install .NET Wasm Workload'
 
   - bash: |
       dotnet publish -c Release "/p:PackageOutputPath=$(build.artifactstagingdirectory)\nuget" "/p:PackageVersion=$GITVERSION_FULLSEMVER" "/p:InformationalVersion=$GITVERSION_INFORMATIONALVERSION" ./src/samples/EFCoreSample/EFCoreSample.Wasm/EFCoreSample.Wasm.csproj
