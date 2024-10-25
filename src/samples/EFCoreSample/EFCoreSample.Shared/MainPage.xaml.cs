@@ -69,11 +69,18 @@ namespace EFCoreSample
 
 		private async void Run_Click(object sender, RoutedEventArgs e)
 		{
+			try
+			{
 #if __WASM__
-			await SampleRunner.RunSample(codeBlock.Text.Replace("\\n", "\n"));
+				await SampleRunner.RunSample(codeBlock.Text.Replace("\\n", "\n"));
 #else
 			await SampleClass.Run();
 #endif
+			}
+			catch(Exception ex)
+			{
+                output.Text += ex.ToString();
+            }
 		}
 
 		private class TextBlockTextWriter : TextWriter
