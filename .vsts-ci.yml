@@ -81,9 +81,11 @@ jobs:
       version: 9.0.100-rc.2.24474.11
       includePreviewVersions: true
 
+  - bash: dotnet workload install wasm-tools
+    displayName: 'Install .NET Workload'
+
   - bash: |
       dotnet publish -c Release "/p:PackageOutputPath=$(build.artifactstagingdirectory)\nuget" "/p:PackageVersion=$GITVERSION_FULLSEMVER" "/p:InformationalVersion=$GITVERSION_INFORMATIONALVERSION" ./src/samples/EFCoreSample/EFCoreSample.Wasm/EFCoreSample.Wasm.csproj
-
     displayName: 'Build Wasm Head'
 
   - task: PublishBuildArtifacts@1
