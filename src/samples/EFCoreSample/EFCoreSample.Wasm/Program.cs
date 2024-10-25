@@ -1,4 +1,4 @@
-﻿#define ENABLE_EXCEPTIONS_LOGGING
+﻿// #define ENABLE_EXCEPTIONS_LOGGING
 
 using System;
 using Microsoft.Data.Sqlite;
