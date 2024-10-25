@@ -16,25 +16,17 @@ namespace EFCoreSample.Wasm
 
 		static void Main(string[] args)
         {
-            Console.WriteLine("-> Main");
-
 #if ENABLE_EXCEPTIONS_LOGGING
             MonoInternals.mono_trace_enable(1);
 			MonoInternals.mono_trace_set_options("E:all");
 #endif
-
-            Console.WriteLine("-> InitializeLogging");
 
 #if DEBUG
             InitializeLogging();
 #endif  
             SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlite3());
 
-            Console.WriteLine("-> Before start");
-
             Microsoft.UI.Xaml.Application.Start(_ => _app = new App());
-
-            Console.WriteLine("<- After Main");
 		}
         /// <summary>
         /// Configures global Uno Platform logging
